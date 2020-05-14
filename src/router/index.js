@@ -7,12 +7,17 @@ const routes = [
     //公共
     {
         path: '/',
-        redirect: '/login'
+        redirect: '/upload'
     },
     {
-        path: '/login',
-        name: '登录',
-        component: () => import('../views/Login.vue')
+        path: '/upload',
+        name: '上传',
+        component: () => import('../views/Upload.vue')
+    },
+    {
+        path: '/information',
+        name: '信息展示',
+        component: () => import('../views/Information.vue')
     }
 ]
 
