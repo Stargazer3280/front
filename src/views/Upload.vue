@@ -4,7 +4,7 @@
             <el-header>灾情管理平台
                 <div>
                     <el-link :underline="false" @click="$router.push('/upload')">数据上传</el-link>
-                    <el-link :underline="false" @click="$router.push('/information')">数据展示</el-link>
+                    <el-link :underline="false" @click="$router.push('/information')">数据展示与修改</el-link>
                 </div>
             </el-header>
             <div class="title">
@@ -16,7 +16,10 @@
                         <span class="demonstration">请选择数据来源</span>
                         <el-cascader v-model="MSValue" :options="MSOptions" :props="{ expandTrigger: 'hover' }"
                                      style="margin: 20px"></el-cascader>
-                        <el-link :href="url">获取测试用json</el-link>
+                        <div>
+                            <el-link :href="url1" target="_blank">获取测试用json</el-link>
+                            <el-link :href="url2" target="_blank">获取操作说明</el-link>
+                        </div>
                     </div>
                     <el-upload
                             class="upload-demo"
@@ -51,7 +54,8 @@
                     fileUrl: '',
                     formData: new FormData()
                 },
-                url: 'http://49.235.13.152:8181/json.json',
+                url1: 'http://49.235.13.152:8181/json.json',
+                url2: 'http://49.235.13.152:8181/manual.json',
 
                 MSValue: [],
                 MSOptions: [{
@@ -176,22 +180,6 @@
                 const {data: result} = await axios.post('http://49.235.13.152:8181/upload', this.form.formData);
                 this.$message.success(result);
                 this.$router.push('/information');
-            },
-
-            //以下为文件下载用
-            fakeClick(obj) {
-                var ev = document.createEvent("MouseEvents");
-                ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                obj.dispatchEvent(ev);
-            },
-
-            exportRaw(name, data) {
-                var urlObject = window.URL || window.webkitURL || window;
-                var export_blob = new Blob([data]);
-                var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
-                save_link.href = urlObject.createObjectURL(export_blob);
-                save_link.download = name;
-                this.fakeClick(save_link);
             }
         }
     }
