@@ -7,7 +7,7 @@
             </div>
         </el-header>
         <div class="content">
-            <span style="font-size: 20px">-灾情预测-</span>
+            <span style="font-size: 20px">-交通系统灾情-</span>
             <el-form ref="formRef" :model="form" :rules="formRules"
                      label-width="100px" style="margin: 50px 50px 0 0" status-icon>
                 <el-form-item prop="id" label="编码">
@@ -19,28 +19,16 @@
                 <el-form-item prop="location" label="地点">
                     <el-input v-model="form.location"></el-input>
                 </el-form-item>
-                <el-form-item prop="longitude" label="经度">
-                    <el-input v-model="form.longitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="latitude" label="纬度">
-                    <el-input v-model="form.latitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="depth" label="深度">
-                    <el-input v-model="form.depth"></el-input>
-                </el-form-item>
-                <el-form-item prop="magnitude" label="震级">
-                    <el-input v-model="form.magnitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="intensity" label="烈度">
-                    <el-input v-model="form.intensity"></el-input>
-                </el-form-item>
                 <el-form-item prop="type" label="类型">
                     <el-input v-model="form.type"></el-input>
+                </el-form-item>
+                <el-form-item prop="grade" label="破坏等级">
+                    <el-input v-model="form.grade"></el-input>
                 </el-form-item>
                 <!--                <el-form-item prop="picture" label="典型照片">-->
                 <!--                    <el-input v-model="form.picture"></el-input>-->
                 <!--                </el-form-item>-->
-                <el-form-item prop="note" label="破坏情况描述">
+                <el-form-item prop="note" label="灾情描述">
                     <el-input v-model="form.note"></el-input>
                 </el-form-item>
                 <el-form-item prop="reportingUnit" label="上报单位">
@@ -56,22 +44,8 @@
 
 <script>
     export default {
-        name: "DisasterPrediction",
+        name: "TrafficDisaster",
         data() {
-            //必须输入数字规则（validator）变量
-            var floatRules = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('该栏目不能为空'));
-                }
-                if (!/^[0-9]+\.?[0-9]+?$/.test(value)) {
-                    callback(new Error('请输入小数值'));
-                }
-                if (value.length >= 100) {
-                    callback(new Error('长度不超过100个数字'));
-                } else {
-                    callback();
-                }
-            };
             return {
                 //从其他页面用url传进来的参数，用于以此从后端拿数据
                 no: this.$route.query.no,
@@ -92,29 +66,16 @@
                         {required: true, message: '请输入地点', trigger: 'blur'},
                         {max: 100, message: '长度不超过100个字符', trigger: 'blur'}
                     ],
-
-                    longitude: [
-                        {validator: floatRules}
-                    ],
-                    latitude: [
-                        {validator: floatRules}
-                    ],
-                    depth: [
-                        {validator: floatRules}
-                    ],
-                    magnitude: [
-                        {validator: floatRules}
-                    ],
-                    intensity: [
-                        {required: true, message: '请输入烈度', trigger: 'blur'},
-                        {max: 6, message: '长度不超过6个字符', trigger: 'blur'}
-                    ],
                     type: [
                         {required: true, message: '请输入类型', trigger: 'blur'},
-                        {max: 2, message: '长度不超过2个字符', trigger: 'blur'}
+                        {max: 4, message: '长度不超过4个字符', trigger: 'blur'}
+                    ],
+                    grade: [
+                        {required: true, message: '请输入破坏等级', trigger: 'blur'},
+                        {max: 4, message: '长度不超过4个字符', trigger: 'blur'}
                     ],
                     note: [
-                        {required: true, message: '请输入破坏状况描述', trigger: 'blur'},
+                        {required: true, message: '请输入灾情描述', trigger: 'blur'},
                         {max: 200, message: '长度不超过200个字符', trigger: 'blur'}
                     ],
                     reportingUnit: [
@@ -131,7 +92,7 @@
             //获取数据
             async getData() {
                 const _this = this;
-                await axios.get('http://49.235.13.152:8181/information/get/disasterPrediction', {params: {no: this.no}}).then(function (resp) {
+                await axios.get('http://49.235.13.152:8181/information/get/trafficDisaster', {params: {no: this.no}}).then(function (resp) {
                     _this.form = resp.data;
                 });
             },
@@ -140,7 +101,7 @@
                     //valid为假则验证不通过
                     if (!valid) return;
                     //valid为真则发送数据并登录
-                    const {data: result} = await axios.post('http://49.235.13.152:8181/information/update/disasterPrediction', this.form);
+                    const {data: result} = await axios.post('http://49.235.13.152:8181/information/update/trafficDisaster', this.form);
                     this.$message.success(result);
                     this.$router.push('/information');
                 });

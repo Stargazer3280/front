@@ -7,41 +7,20 @@
             </div>
         </el-header>
         <div class="content">
-            <span style="font-size: 20px">-灾情预测-</span>
+            <span style="font-size: 20px">-人员失踪-</span>
             <el-form ref="formRef" :model="form" :rules="formRules"
                      label-width="100px" style="margin: 50px 50px 0 0" status-icon>
                 <el-form-item prop="id" label="编码">
                     <el-input v-model="form.id"></el-input>
                 </el-form-item>
+                <el-form-item prop="location" label="失踪地点">
+                    <el-input v-model="form.location"></el-input>
+                </el-form-item>
                 <el-form-item prop="date" label="上报时间">
                     <el-input v-model="form.date"></el-input>
                 </el-form-item>
-                <el-form-item prop="location" label="地点">
-                    <el-input v-model="form.location"></el-input>
-                </el-form-item>
-                <el-form-item prop="longitude" label="经度">
-                    <el-input v-model="form.longitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="latitude" label="纬度">
-                    <el-input v-model="form.latitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="depth" label="深度">
-                    <el-input v-model="form.depth"></el-input>
-                </el-form-item>
-                <el-form-item prop="magnitude" label="震级">
-                    <el-input v-model="form.magnitude"></el-input>
-                </el-form-item>
-                <el-form-item prop="intensity" label="烈度">
-                    <el-input v-model="form.intensity"></el-input>
-                </el-form-item>
-                <el-form-item prop="type" label="类型">
-                    <el-input v-model="form.type"></el-input>
-                </el-form-item>
-                <!--                <el-form-item prop="picture" label="典型照片">-->
-                <!--                    <el-input v-model="form.picture"></el-input>-->
-                <!--                </el-form-item>-->
-                <el-form-item prop="note" label="破坏情况描述">
-                    <el-input v-model="form.note"></el-input>
+                <el-form-item prop="number" label="失踪人数">
+                    <el-input v-model="form.number"></el-input>
                 </el-form-item>
                 <el-form-item prop="reportingUnit" label="上报单位">
                     <el-input v-model="form.reportingUnit"></el-input>
@@ -56,18 +35,18 @@
 
 <script>
     export default {
-        name: "DisasterPrediction",
+        name: "MissingStatistics",
         data() {
             //必须输入数字规则（validator）变量
-            var floatRules = (rule, value, callback) => {
+            var numberRules = (rule, value, callback) => {
                 if (!value) {
-                    return callback(new Error('该栏目不能为空'));
+                    return callback(new Error('请输入内容'));
                 }
-                if (!/^[0-9]+\.?[0-9]+?$/.test(value)) {
-                    callback(new Error('请输入小数值'));
+                if (!/^\d+$/.test(value)) {
+                    callback(new Error('请输入数字值'));
                 }
-                if (value.length >= 100) {
-                    callback(new Error('长度不超过100个数字'));
+                if (value.length >= 11) {
+                    callback(new Error('长度不超过11个数字'));
                 } else {
                     callback();
                 }
@@ -84,38 +63,16 @@
                         {required: true, message: '请输入编码', trigger: 'blur'},
                         {min: 19, max: 19, message: '必须为19个字符', trigger: 'blur'}
                     ],
+                    location: [
+                        {required: true, message: '请输入内容', trigger: 'blur'},
+                        {max: 100, message: '长度不超过100个字符', trigger: 'blur'}
+                    ],
                     date: [
                         {required: true, message: '请输入上报时间', trigger: 'blur'},
                         {max: 12, message: '长度不超过12个字符', trigger: 'blur'}
                     ],
-                    location: [
-                        {required: true, message: '请输入地点', trigger: 'blur'},
-                        {max: 100, message: '长度不超过100个字符', trigger: 'blur'}
-                    ],
-
-                    longitude: [
-                        {validator: floatRules}
-                    ],
-                    latitude: [
-                        {validator: floatRules}
-                    ],
-                    depth: [
-                        {validator: floatRules}
-                    ],
-                    magnitude: [
-                        {validator: floatRules}
-                    ],
-                    intensity: [
-                        {required: true, message: '请输入烈度', trigger: 'blur'},
-                        {max: 6, message: '长度不超过6个字符', trigger: 'blur'}
-                    ],
-                    type: [
-                        {required: true, message: '请输入类型', trigger: 'blur'},
-                        {max: 2, message: '长度不超过2个字符', trigger: 'blur'}
-                    ],
-                    note: [
-                        {required: true, message: '请输入破坏状况描述', trigger: 'blur'},
-                        {max: 200, message: '长度不超过200个字符', trigger: 'blur'}
+                    number: [
+                        {validator: numberRules}
                     ],
                     reportingUnit: [
                         {required: true, message: '请输入上报单位', trigger: 'blur'},
@@ -131,7 +88,7 @@
             //获取数据
             async getData() {
                 const _this = this;
-                await axios.get('http://49.235.13.152:8181/information/get/disasterPrediction', {params: {no: this.no}}).then(function (resp) {
+                await axios.get('http://49.235.13.152:8181/information/get/missingStatistics', {params: {no: this.no}}).then(function (resp) {
                     _this.form = resp.data;
                 });
             },
@@ -140,7 +97,7 @@
                     //valid为假则验证不通过
                     if (!valid) return;
                     //valid为真则发送数据并登录
-                    const {data: result} = await axios.post('http://49.235.13.152:8181/information/update/disasterPrediction', this.form);
+                    const {data: result} = await axios.post('http://49.235.13.152:8181/information/update/missingStatistics', this.form);
                     this.$message.success(result);
                     this.$router.push('/information');
                 });

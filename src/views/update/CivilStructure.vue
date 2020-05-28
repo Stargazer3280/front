@@ -41,7 +41,7 @@
                     <el-input v-model="form.reportingUnit"></el-input>
                 </el-form-item>
                 <el-form-item style="display: flex;justify-content: center">
-                    <el-button type="primary" @click="insert">添加</el-button>
+                    <el-button type="primary" @click="update">修改</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -106,7 +106,7 @@
                     _this.form = resp.data;
                 });
             },
-            insert() {
+            update() {
                 this.$refs.formRef.validate(async valid => {
                     //valid为假则验证不通过
                     if (!valid) return;

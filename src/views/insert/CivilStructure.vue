@@ -19,9 +19,6 @@
                 <el-form-item prop="location" label="地点">
                     <el-input v-model="form.location"></el-input>
                 </el-form-item>
-                <el-form-item prop="location" label="地点">
-                    <el-input v-model="form.location"></el-input>
-                </el-form-item>
                 <el-form-item prop="basicallyIntactSquare" label="基本完好面积">
                     <el-input v-model="form.basicallyIntactSquare"></el-input>
                 </el-form-item>

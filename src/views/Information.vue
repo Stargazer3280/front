@@ -37,6 +37,35 @@
                         <el-button type="danger" plain @click="deleteL('deathStatistics',o.no)">删除</el-button>
                     </el-card>
                 </el-tab-pane>
+                <el-tab-pane label="人员失踪">
+                    <div style="display: flex;flex-direction: row-reverse">
+                        <el-button type="success" plain @click="$router.push('/insert/missingStatistics')"
+                                   style="margin-right: 20px">添加数据行
+                        </el-button>
+                    </div>
+                    <el-card v-for="o in missingStatisticsList" :key="o"
+                             style="background-color: rgba(255, 255, 255, 0.2);margin: 20px">
+                        <el-row>
+                            <el-col :span="8">
+                                <img width="200px" height="200px"
+                                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590072819222&di=7f57509f03714e498ae60c9abb6a652b&imgtype=0&src=http%3A%2F%2Fwww.people.com.cn%2Fmediafile%2Fpic%2F20150129%2F42%2F18324605294148067862.jpg"/>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>编码：{{o.id}}</p>
+                                <p>失踪地点：{{o.location}}</p>
+                                <p>上报时间：{{o.date}}</p>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>失踪人数：{{o.number}}</p>
+                                <p>上报单位：{{o.reportingUnit}}</p>
+                            </el-col>
+                        </el-row>
+                        <el-button style="margin-left: 20px" type="primary" plain
+                                   @click="updateL('missingStatistics',o.no)">修改
+                        </el-button>
+                        <el-button type="danger" plain @click="deleteL('missingStatistics',o.no)">删除</el-button>
+                    </el-card>
+                </el-tab-pane>
                 <el-tab-pane label="土木结构房屋破坏">
                     <div style="display: flex;flex-direction: row-reverse">
                         <el-button type="success" plain @click="$router.push('/insert/civilStructure')"
@@ -67,6 +96,71 @@
                                    @click="updateL('civilStructure',o.no)">修改
                         </el-button>
                         <el-button type="danger" plain @click="deleteL('civilStructure',o.no)">删除</el-button>
+                    </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="砖混结构房屋破坏">
+                    <div style="display: flex;flex-direction: row-reverse">
+                        <el-button type="success" plain @click="$router.push('/insert/masonryStructure')"
+                                   style="margin-right: 20px">添加数据行
+                        </el-button>
+                    </div>
+                    <el-card v-for="o in masonryStructureList" :key="o"
+                             style="background-color: rgba(255, 255, 255, 0.2);margin: 20px">
+                        <el-row>
+                            <el-col :span="8">
+                                <img width="200px" height="200px"
+                                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590072819222&di=7f57509f03714e498ae60c9abb6a652b&imgtype=0&src=http%3A%2F%2Fwww.people.com.cn%2Fmediafile%2Fpic%2F20150129%2F42%2F18324605294148067862.jpg"/>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>编码：{{o.id}}</p>
+                                <p>上报时间：{{o.date}}</p>
+                                <p>地点：{{o.location}}</p>
+                                <p>基本完好面积：{{o.basicallyIntactSquare}}</p>
+                                <p>轻微破坏面积：{{o.slightDamagedSquare}}</p>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>中等破坏面积：{{o.moderateDamagedSquare}}</p>
+                                <p>严重破坏面积：{{o.seriousDamagedSquare}}</p>
+                                <p>毁坏面积：{{o.destroyedSquare}}</p>
+                                <p>破坏情况描述：{{o.note}}</p>
+                                <p>上报单位：{{o.reportingUnit}}</p>
+                            </el-col>
+                        </el-row>
+                        <el-button style="margin-left: 20px" type="primary" plain
+                                   @click="updateL('masonryStructure',o.no)">修改
+                        </el-button>
+                        <el-button type="danger" plain @click="deleteL('masonryStructure',o.no)">删除</el-button>
+                    </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="交通系统灾情">
+                    <div style="display: flex;flex-direction: row-reverse">
+                        <el-button type="success" plain @click="$router.push('/insert/trafficDisaster')"
+                                   style="margin-right: 20px">添加数据行
+                        </el-button>
+                    </div>
+                    <el-card v-for="o in trafficDisasterList" :key="o"
+                             style="background-color: rgba(255, 255, 255, 0.2);margin: 20px">
+                        <el-row>
+                            <el-col :span="8">
+                                <img width="200px" height="200px"
+                                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590072819222&di=7f57509f03714e498ae60c9abb6a652b&imgtype=0&src=http%3A%2F%2Fwww.people.com.cn%2Fmediafile%2Fpic%2F20150129%2F42%2F18324605294148067862.jpg"/>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>编码：{{o.id}}</p>
+                                <p>上报时间：{{o.date}}</p>
+                                <p>地点：{{o.location}}</p>
+                                <p>类型：{{o.type}}</p>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>破坏等级：{{o.grade}}</p>
+                                <p>灾情描述：{{o.note}}</p>
+                                <p>上报单位：{{o.reportingUnit}}</p>
+                            </el-col>
+                        </el-row>
+                        <el-button style="margin-left: 20px" type="primary" plain @click="updateL('trafficDisaster',o.no)">
+                            修改
+                        </el-button>
+                        <el-button type="danger" plain @click="deleteL('trafficDisaster',o.no)">删除</el-button>
                     </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="通信系统灾情">
@@ -131,6 +225,69 @@
                         <el-button type="danger" plain @click="deleteL('collapseRecord',o.no)">删除</el-button>
                     </el-card>
                 </el-tab-pane>
+                <el-tab-pane label="滑坡">
+                    <div style="display: flex;flex-direction: row-reverse">
+                        <el-button type="success" plain @click="$router.push('/insert/landslideRecord')"
+                                   style="margin-right: 20px">添加数据行
+                        </el-button>
+                    </div>
+                    <el-card v-for="o in landslideRecordList" :key="o"
+                             style="background-color: rgba(255, 255, 255, 0.2);margin: 20px">
+                        <el-row>
+                            <el-col :span="8">
+                                <img width="200px" height="200px"
+                                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590072819222&di=7f57509f03714e498ae60c9abb6a652b&imgtype=0&src=http%3A%2F%2Fwww.people.com.cn%2Fmediafile%2Fpic%2F20150129%2F42%2F18324605294148067862.jpg"/>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>编码：{{o.id}}</p>
+                                <p>地点：{{o.location}}</p>
+                                <p>上报日期：{{o.date}}</p>
+                                <p>类型：{{o.type}}</p>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>灾害程度：{{o.status}}</p>
+                                <p>灾情描述：{{o.note}}</p>
+                                <p>上报单位：{{o.reportingUnit}}</p>
+                            </el-col>
+                        </el-row>
+                        <el-button style="margin-left: 20px" type="primary" plain
+                                   @click="updateL('landslideRecord',o.no)">修改
+                        </el-button>
+                        <el-button type="danger" plain @click="deleteL('landslideRecord',o.no)">删除</el-button>
+                    </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="基本震情">
+                    <div style="display: flex;flex-direction: row-reverse">
+                        <el-button type="success" plain @click="$router.push('/insert/disasterInfo')"
+                                   style="margin-right: 20px">添加数据行
+                        </el-button>
+                    </div>
+                    <el-card v-for="o in disasterInfoList" :key="o"
+                             style="background-color: rgba(255, 255, 255, 0.2);margin: 20px">
+                        <el-row>
+                            <el-col :span="8">
+                                <img width="200px" height="200px"
+                                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590072819222&di=7f57509f03714e498ae60c9abb6a652b&imgtype=0&src=http%3A%2F%2Fwww.people.com.cn%2Fmediafile%2Fpic%2F20150129%2F42%2F18324605294148067862.jpg"/>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>编码：{{o.id}}</p>
+                                <p>上报时间：{{o.date}}</p>
+                                <p>地点：{{o.location}}</p>
+                                <p>经度：{{o.longitude}}</p>
+                            </el-col>
+                            <el-col :span="8">
+                                <p>纬度：{{o.latitude}}</p>
+                                <p>深度：{{o.depth}}</p>
+                                <p>震级：{{o.magnitude}}</p>
+                                <p>上报单位：{{o.reportingUnit}}</p>
+                            </el-col>
+                        </el-row>
+                        <el-button style="margin-left: 20px" type="primary" plain
+                                   @click="updateL('disasterInfo',o.no)">修改
+                        </el-button>
+                        <el-button type="danger" plain @click="deleteL('disasterInfo',o.no)">删除</el-button>
+                    </el-card>
+                </el-tab-pane>
                 <el-tab-pane label="灾情预测">
                     <div style="display: flex;flex-direction: row-reverse">
                         <el-button type="success" plain @click="$router.push('/insert/disasterPrediction')"
@@ -179,9 +336,14 @@
         data() {
             return {
                 deathStatisticsList: [],
+                missingStatisticsList: [],
                 civilStructureList: [],
+                masonryStructureList: [],
+                trafficDisasterList: [],
                 commDisasterList: [],
                 collapseRecordList: [],
+                landslideRecordList: [],
+                disasterInfoList: [],
                 disasterPredictionList: [],
 
             }
@@ -196,14 +358,29 @@
                 await axios.get('http://49.235.13.152:8181/information/getAll/deathStatistics').then(function (resp) {
                     _this.deathStatisticsList = resp.data;
                 });
+                await axios.get('http://49.235.13.152:8181/information/getAll/missingStatistics').then(function (resp) {
+                    _this.missingStatisticsList = resp.data;
+                });
                 await axios.get('http://49.235.13.152:8181/information/getAll/civilStructure').then(function (resp) {
                     _this.civilStructureList = resp.data;
+                });
+                await axios.get('http://49.235.13.152:8181/information/getAll/masonryStructure').then(function (resp) {
+                    _this.masonryStructureList = resp.data;
+                });
+                await axios.get('http://49.235.13.152:8181/information/getAll/trafficDisaster').then(function (resp) {
+                    _this.trafficDisasterList = resp.data;
                 });
                 await axios.get('http://49.235.13.152:8181/information/getAll/commDisaster').then(function (resp) {
                     _this.commDisasterList = resp.data;
                 });
                 await axios.get('http://49.235.13.152:8181/information/getAll/collapseRecord').then(function (resp) {
                     _this.collapseRecordList = resp.data;
+                });
+                await axios.get('http://49.235.13.152:8181/information/getAll/landslideRecord').then(function (resp) {
+                    _this.landslideRecordList = resp.data;
+                });
+                await axios.get('http://49.235.13.152:8181/information/getAll/disasterInfo').then(function (resp) {
+                    _this.disasterInfoList = resp.data;
                 });
                 await axios.get('http://49.235.13.152:8181/information/getAll/disasterPrediction').then(function (resp) {
                     _this.disasterPredictionList = resp.data;
@@ -214,14 +391,29 @@
                     case 'deathStatistics':
                         this.$router.push({path: '/update/deathStatistics', query: {no: no}});
                         break;
+                    case 'missingStatistics':
+                        this.$router.push({path: '/update/missingStatistics', query: {no: no}});
+                        break;
                     case 'civilStructure':
                         this.$router.push({path: '/update/civilStructure', query: {no: no}});
+                        break;
+                    case 'masonryStructure':
+                        this.$router.push({path: '/update/masonryStructure', query: {no: no}});
+                        break;
+                    case 'trafficDisaster':
+                        this.$router.push({path: '/update/trafficDisaster', query: {no: no}});
                         break;
                     case 'commDisaster':
                         this.$router.push({path: '/update/commDisaster', query: {no: no}});
                         break;
                     case 'collapseRecord':
                         this.$router.push({path: '/update/collapseRecord', query: {no: no}});
+                        break;
+                    case 'landslideRecord':
+                        this.$router.push({path: '/update/landslideRecord', query: {no: no}});
+                        break;
+                    case 'disasterInfo':
+                        this.$router.push({path: '/update/disasterInfo', query: {no: no}});
                         break;
                     case 'disasterPrediction':
                         this.$router.push({path: '/update/disasterPrediction', query: {no: no}});
